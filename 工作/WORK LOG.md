@@ -421,17 +421,518 @@ bg：`git clone <远程仓库地址>` clone且仅clone main这一个分支 (通�
 
 ## 12.13
 
+### <font color='#008080'>daily work achieve</font>
+
+昨天上午接到了要写代码的任务，下午有事情，到晚上拉下来代码，留了一堆飘红走了
+
+今天开始正式进这个项目
+
+
+
 ### git config两个账号
 
 https://www.cnblogs.com/cangqinglang/p/12462272.html
 
+注意：
+
+恭喜你！完成以上配置后，其实你已经基本完成了所有配置。分别进入附属于 github 和 gitlab 的仓库，此时都可以进行 git 操作了。但是别急，如果你此时提交仓库修改后，你会发现提交的用户名变成了你的系统主机名。
+
+这是因为 git 的配置分为三级别，System —> Global —>Local。System 即系统级别，Global 为配置的全局，Local 为仓库级别，优先级是 Local > Global > System。
+
+因为我们并没有给仓库配置用户名，又在一开始清除了全局的用户名，因此此时你提交的话，就会使用 System 级别的用户名，也就是你的系统主机名了。
+
+因此我们需要为每个仓库单独配置用户名信息，假设我们要配置 github 的某个仓库，进入该仓库后，执行：
+
+```
+git config --local user.name "jitwxs"
+git config --local user.email "jitwxs@foxmail.com" 
+```
+
+执行完毕后，通过以下命令查看本仓库的所有配置信息：
+
+git config --local --list
+
+
+
+## 12.14
+
+### maven导包成功但import飘红
+
+问题描述：
+
+1. 第一阶段，左边全灰，即，不能识别子模块。
+
+   + 解决：尝试清除缓存重启，等，最后莫名其妙好了
+
+2. 第二阶段，能够识别子模块，但是pom文件橙色
+
+   + 解决：[idea在克隆Maven项目时pom文件无法识别子模块，依赖导入不进来](https://blog.csdn.net/qq_42956376/article/details/111450758)
+
+3. 第三阶段，还剩这个import不进来
+
+   ![image-20221214110243633](https://raw.githubusercontent.com/tuysss/cloudimg/main/Typora-Notes-images/2022/12/14/44fd43805851b58b40beca069153e9ba-20221214110245-82f917.png)
+
+   + ~~一个思路：含.proto文件的上一级目录应该被marked as sources root~~
+   
+   + 问题实质之一：<font color='red'>**import不是从project中的.java文件中import，而是从target的.class文件中**</font>
+   
+     + 需要先maven编译：`mvn clean compile -DCHECKSTYLE.SKIP=TRUED  //-D：传入properties属性参数`
+   
+   + 问题实质之二：idea识别不了target包中的类/maven项目无法识别jar包里的class
+   
+     + 最终解决：删除项目中的.idea文件，重启。
+   
+       （.Idea存放项目的配置信息，包括描述、编码、历史记录，版本控制信息。in own word，保存一些过去的配置信息）。
+
++ **扩展： 很多情况，诸如.class导入失败/.class不能生成 /project接口乱套**，都可以尝试使用删除.idea文件夹，然后关闭打开，.idea文件夹会自动生成
++ **扩展之二： 许多build可以成功，但是飘红报错的通用思路：**
+  1. `mvn clean` + `mvn install -Dcheskstyle.skip=true`
+  2. 尝试invalidate and restart
+  3. 尝试删除.idea文件夹
+
+
+
+### gRPC
+
+https://appmaster.io/zh/blog/shi-yao-shi-grpc
+
+//todo：笔记
+
+
+
+### 微服务
+
++ 工程项目下多模块+模块之间建立依赖关系
+
+  
+
+### IDEA全局设置不能走preference（快捷键#，）
+
+
+
+### 脑中模拟开发流程 -> 见停发区域查询/
+
+![image-20221214204746727](https://raw.githubusercontent.com/tuysss/cloudimg/main/Typora-Notes-images/2022/12/14/c305e9162b7ad0285328e647d232ae08-20221214204748-403363.png)
 
 
 
 
 
+## 12.15
+
+### <font color='#008080'>daily work achieve</font>
+
+1. 学习宁，如何细致地做一件事，从头开始，那些在地基上省下的时间之后要加倍奉还的。比如上面这张架构图，我收到就“以为自己看不懂”，然后就不看了。其实，只要耐下性子来，半个小时的事情。后面琐碎的，多花了多少时间来来回回的看。差不多从11月初入职前发现的这个问题，再加上最近面试回答起基础问题，常常有这朵乌云在头顶——那些该成为基础的，我踏得很飘忽。不过也不要太着急，宝想要，宝努力，宝得到。从生活和工作的每一处中可以训练就好。
+2. debug：今天观察别人帮我debug的心路历程（by搜索记录），发现也没什么不一样，就是经验+排查+搜索+落实。不过我想较而言欠缺的——相信自己一定能够解决的信心。常常半途而废。
+3. 今天下午开始吧，拿到这个大项目，有点吓到，也有点平静。（因为通过之前的经验和正反馈相信这个问题是困难的，但是是我可以解决的。）从两点半起吧，现在是十点整，学习protocal buffer加上梳理一条业务链路，可以说能看懂这一条七八分了。爽爽的，加油～
+
+
+
+### git reset 
+
++ git reset --hard [版本哈希]    //用于回退版本
+
++ 不带[版本哈希]     //回到第一次pull或者clone
++ 不带--hard           //用来从暂存恢复到工作区，场景：不小心add多了文件
+
+### git分支管理再学习
+
+https://www.runoob.com/git/git-branch.html
+
+
+
+### maven常用指令 
+
+`mvn clean`	清理项目生产的临时文件,一般是模块下的target目录
+`mvn compile`	编译源代码，一般编译模块下的src/main/java目录
 
 
 
 
+
+### Protobuf学习
+
+#### 1. overview
+
+https://developers.google.com/protocol-buffers/docs/overview
+
++ 是什么？
+  + 语言/平台无关的，前后兼容的，像json但更小更快--产生原生语言binding
+  + ”Protocol buffer“语义：是一门语言；是proto编译器将处理的代码；特定语言的运行时库；可写进文件的序列化数据
++ 解决了什么问题？
+  + 给‘包’中的结构化数据提供了提供了序列化格式，以极小的size（megabytes）
+  + 对即时网络传输和长期数据存储都通用
+  + 结构：{message+service}都是在`.proto`文件中自定义
+  + proto编译器在**build**时被调用
+
+#### 2. 语法指南
+
++ 根据您的 `.proto` 生成的内容
+
+  + 对于 **Java**，编译器会生成 `.java` 文件，其中包含每种消息类型的类，以及用于创建消息类实例的特殊 `Builder` 类。
+
++ 导入定义
+
+  https://developers.google.com/protocol-buffers/docs/proto3#importing_definitions
+
++ 定义服务
+  + 如果要将消息类型与 RPC（远程过程调用）系统配合使用，您可以在 `.proto` 文件中定义 RPC 服务接口，协议缓冲区编译器会生成以您选择的语言编写的服务接口代码和存根。
+
+#### 3. proto java教程
+
+一个[实例](https://developers.google.com/protocol-buffers/docs/javatutorial), 特别好。讲了：`java_package` ,`java_multiple_files`, `java_package`, and `java_outer_classname`.
+
+1. 关于.proto文件的选项：
+
+（因为weava标注在google页面不生效，摘录重要如下：）
+
++ 栗子中：The `.proto` file starts with a package declaration, which helps to prevent naming conflicts between different projects. In Java, the package name is used as the Java package unless you have explicitly specified a `java_package`, 
+  + 语法中：`java_package` (file option): The package you want to use for your generated Java/Kotlin classes. 
+  +  ！！java_package中的路径是target中生成的.class文件的路径，而非java文件路径。而这个java_package又与import关联着（抬头看上面红字import）
+  + [关于protobuf文件几个参数的含义](https://blog.csdn.net/u010900754/article/details/105984161 )（package、java_package）——“包名的含义与平台语言无关，这个package仅仅被用在proto文件中用于区分同名的message类型。可以理解为message全名的前缀”
+
+#### 4. personal questions
+
+1. protobuf和grpc的关系？
+   - ProtoBuf是一种序列化数据结构的协议
+   - [protoc](https://www.zhihu.com/search?q=protoc&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"answer"%2C"sourceId"%3A2522919604})是一个能把proto数据结构转换为各种语言代码的工具
+   - RPC是一种通信协议
+   - gRPC是一种使用ProtoBuf作为接口描述语言的一个RPC实现方案
+
+
+
+### @resource和@autowired
+
+<img src="https://raw.githubusercontent.com/tuysss/cloudimg/main/Typora-Notes-images/2022/12/15/e6b6974fea4ed820e3b66439dbad0324-20221215211150-d119ce.png" alt="image-20221215211148948" style="zoom:50%;" />
+
++ 二者都是做bean的注入时使用。@Autowired是spring提供的注解；@Resource是javax.annotation.Resource包中的，需要导入，但是spring支持。
++ @Autowired只能按照类型（byType）装配依赖对象。若想byType，需要结合@Quailfier注解使用
++ @Resource默认byName。可以通过设置name或者type属性=type，按type注入`@Resource(name="userDao")`
+
+参考：https://www.cnblogs.com/think-in-java/p/5474740.html
+
+
+
+
+
+## 12.16
+
+### <font color='#008080'>daily work achieve</font>
+
+
+
+### git
+
+##### git fetch 切换远程分支到本地
+
+https://www.jianshu.com/p/1958c55722a7
+
+##### git stash
+
+保存当前工作进度，会把暂存区和工作区的改动保存起来。执行完这个命令后，在运行`git status`命令，就会发现当前是一个干净的工作区，没有任何改动。
+
+应用场景：开发到一半，有新需求要切换到另一个分支，但是现在还不想提交，使用stash保存当前的工作。之后可以`stash pop`恢复
+
+git reset
+
+### 领域模型
+
++ 针对业务，OO的
++ 相对于“数据模型”而言的
+
+
+
+## es文档
+
+### 一基础入门 
+
++  通过隐藏 Lucene 的复杂性，取而代之的提供一套简单一致的 RESTful API。
++ es的语义包括：一个分布式的实时文档**存储**，每个字段可以**被索引**和搜索；一个分布式实时**分析**搜索引擎；能胜任上百个服务节点的扩展。
+
+#### 1.你知道的，为了搜索...
+
+##### 和Elasticsearch交互
+
++ java中，使用es内置的客户端，通过9300端口并使用 Elasticsearch 的原生 *传输* 协议和集群交互
++ 所有其他语言，使用restful api通过9200端口，实际使用和任何http请求相同，by curl
+
+##### 面向文档
+
++ 和关系型数据库对比：行和列存储不适合表现力丰富的大对象，且存储时需要将对象压缩成行，查询时又要重新构造成对象。
++ ES是面向文档的，即存储整个对象或文档。使用JSON作为文档的序列化格式。
+
+#### 一个示例：索引员工文档
+
+##### 存储
+
+概念上的：
+
++ “索引”/index的语义：
+  + 作名词，一个索引类似于关系型数据库的一个数据库
+  + 作动词，类“存储”，类INSERT
++ *倒排索引*
+  + <font color='red'>区别于B+树的</font>
+  + 默认的，一个文档中的每一个属性都是 *被索引* 的（有一个倒排索引）和可搜索的
+
+实际操作：
+
+```json
+PUT /megacorp/employee/1     //megacorp：索引(数据库),有关联的文档集合[_index] 
+{                             //employee：类型,index下的逻辑分区     [_type]
+    "first_name" : "John",    //1：雇员的ID                         [_id]
+    "last_name" :  "Smith",
+    "age" :        25,
+    "about" :      "I love to go rock climbing",
+    "interests": [ "sports", "music" ]
+}
+PUT /megacorp/employee/2
+{
+    "first_name" :  "Jane",
+    "last_name" :   "Smith",
+    "age" :         32,
+    "about" :       "I like to collect rock albums",
+    "interests":  [ "music" ]
+}
+```
+
+##### 检索
+
+1. 简单地执行 一个 HTTP `GET` 请求并指定文档的地址——索引库、类型和ID。 使用这三个信息可以*返回原始的 JSON 文档*：
+
+```js
+GET /megacorp/employee/1
+```
+
+2. 进入正式的搜索之轻量搜索：——搜索所有的雇员 ： _serach
+
+```js
+GET /megacorp/employee/_search
+```
+
+​	返回结果not原始文档，还要加上查询的范围结果分析
+
+3. 查询表达式，Query_String，使用DSL，此处是JSon
+
+   有点儿类似curl
+
+4. 更复杂的搜索：<font color='brown'>结构化查询</font>、使用match+过滤器filter
+
+5. 全文搜索：`match`。 按照相关性得分排序
+
+6. 短语搜索：`match_phrase` 完全匹配的
+
+7. 高亮搜索：在原来的查询基础上加一个``highlight`参数即可
+
+8. **分析**
+
+   + <font color='red'>聚合</font>功能aggregations。类似SQL中的`GROUP BY`但是更强大
+
+   + e.g. 挖掘出员工中最受欢迎的兴趣爱好
+
+     ```js
+     GET /megacorp/employee/_search
+     {
+       "aggs": {
+         "all_interests": {
+           "terms": { "field": "interests" }
+         }
+       }
+     }
+     ```
+
+     返回结果：
+
+     ```json
+     {
+        ...
+        "hits": { ... },
+        "aggregations": {
+           "all_interests": {
+              "buckets": [
+                 {
+                    "key":       "music",
+                    "doc_count": 2
+                 },
+                 {
+                    "key":       "forestry",
+                    "doc_count": 1
+                 },
+                 {
+                    "key":       "sports",
+                    "doc_count": 1
+                 }
+              ]
+           }
+        }
+     }
+     ```
+
+#### 数据输入和输出
+
++ 在 Elasticsearch 中，术语 ***文档*** 有着特定的含义。它是指最顶层或者根**对象**。
+
+
+
+### 深入搜索
+
+##### 结构化搜索
+
++ 精确值查找——使用过滤器
+
+  + 优势：
+    + 执行快，cas不会计算相关度（跳过了评分阶段）
+    + 很容易被缓存
+
++ 指令：
+
+  + `term`:它接受一个字段名以及我们希望查找的数值
+
+  + `constant_score`当查找一个精确值的时候，我们不希望对查询进行评分计算。只希望对文档进行包括或排除的计算
+
+    ```sense
+    GET /my_store/products/_search
+    {
+        "query" : {
+            "constant_score" : { 
+                "filter" : {
+                    "term" : { 
+                        "price" : 20
+                    }
+                }
+            }
+        }
+    }
+    ```
+
+  
+
+
+
+### 聚合
+
+##### 高阶概念
+
+***桶（Buckets）***
+
+满足特定条件的文档的集合   相当于`GROUP BY color`
+
+***指标（Metrics）***
+
+对桶内的文档进行统计计算     相当于 `SELECT COUNT(color)` 、 `SUM()` 、 `MAX()` 等统计方法 
+
+##### [一个聚合实例](https://www.elastic.co/guide/cn/elasticsearch/guide/current/_aggregation_test_drive.html),非常好！
+
+```sense
+GET /cars/transactions/_search
+{
+    "size" : 0,
+    "aggs" : { 
+        "popular_colors" : { 
+            "terms" : { 
+              "field" : "color"
+            }
+        }
+    }
+}
+```
+
+|      | 聚合操作被置于顶层参数 `aggs` 之下（如果你愿意，完整形式 `aggregations` 同样有效）。 |
+| ---- | ------------------------------------------------------------ |
+|      | 然后，可以为聚合指定一个我们想要名称，本例中是： `popular_colors` 。 |
+|      | 最后，定义单个桶的类型 `terms` 。                            |
+
+
+
+##### 聚合和搜索请求同时执行
+
+##### 过滤——filter桶
+
++ better：在返回结果中过滤than对查询条件限定
+
+##### Doc Values数据结构
+
++ bg：倒排索引只对某些操作是高效的
+  + 倒排索引的优势——查找包含某个项的文档
++ Doc Values 通过序列化把数据结构持久化到磁盘，我们可以充分利用操作系统的内存，而不是 JVM 的 Heap
+
+### 数据建模
+
+##### 关联关系处理
+
++ 关系型数据库的局限性：
+  + 对全文检索有限的支持能力
+  + 实例关联查询的时间消耗很昂贵。特别是跨服务器进行实体关联时成本极其昂贵，基本不可用。
++ ES和大多数NoSQL数据库类似，是扁平化的。扁平化优势：
+  + 索引过程是快速和无锁的。
+    + ps.单个文档中的数据变更是ACID的，而涉及多个文档的事务不是。当一个事务部分失败时，无法回滚索引数据到前一个状态。
+  + 搜索过程是快速和无锁的。
+  + 因为每个文档相互都是独立的，大规模数据可以在多个节点上进行分布。
++ 模拟关系数据库：
+
+
+
+## 12.19
+
+### 区分数据模型：DO、DTO、VO
+
+<img src="https://raw.githubusercontent.com/tuysss/cloudimg/main/Typora-Notes-images/2022/12/19/d0bef0f8120db87fd6cb27b92a43d8fa-20221219191137-ac41ba.webp" alt="img" style="zoom:50%;" />
+
++ DTO：Data Transfer Object数据传输对象。
+  + 横跨前端后端。在后端，是controller的java对象，在前端是js对象（json
++ VO：View Objec值对象。
+  + 展示用的数据。纯前端。json
++ PO：Persistant object持久对象。
+  + 数据库中的记录。一个PO的数据结构对应着库中表的结构。==Entity
++ BO：Business Object业务对象。
+  + Bo就是PO的组合。有可能在业务层拼装，也可能框架跳过PO直接生成BO。
++ DO：在阿里巴巴开发手册中的定义，Data Object==PO
+
+
+
+
+
+## 12.29
+
+#### :: in Java
+
+1. 是什么？
+
+   如果Lambda要表达的函数方案已经存在于某个方法的实现中，那么则可以通过双冒号来引用该方法作为Lambda的替代者。也就是说，方法引用实际上是返回一个方法，而不是该方法的执行结果。
+
+2. 基本语法
+
+​	**构造器引用：**它的语法是Class::new，或者更一般的Class< T >::new实例如下：
+
+```
+final Car car = Car.create( Car::new );final List< Car > cars = Arrays.asList( car );
+```
+
+​	**静态方法引用：**它的语法是Class::static_method，实例如下：
+
+```
+cars.forEach( Car::collide );
+```
+
+​	**特定类的任意对象的方法引用：**它的语法是Class::method实例如下：
+
+```
+cars.forEach( Car::repair );
+```
+
+​	**特定对象的方法引用：**它的语法是instance::method实例如下：
+
+```
+final Car police = Car.create( Car::new );cars.forEach( police::follow ); 
+```
+
+3. 一个实例：
+
+```java
+  //获取合并后的停发管控区间
+  Long mergedStartTime = unreachableOriginalAreaList.stream().filter(Objects::nonNull)
+    .map(UnreachableAreaCheckDO::getStartTime)
+    .filter(Objects::nonNull)
+    .min(Long::compare)
+    .orElseGet(System::currentTimeMillis);
+```
 
