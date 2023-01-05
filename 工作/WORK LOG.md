@@ -476,7 +476,7 @@ git config --local --list
    
    + 问题实质之一：<font color='red'>**import不是从project中的.java文件中import，而是从target的.class文件中**</font>
    
-     + 需要先maven编译：`mvn clean compile -DCHECKSTYLE.SKIP=TRUED  //-D：传入properties属性参数`
+     + 需要先maven编译：`mvn clean compile -DCHECKSTYLE.SKIP=TRUE  //-D：传入properties属性参数`
    
    + 问题实质之二：idea识别不了target包中的类/maven项目无法识别jar包里的class
    
@@ -869,6 +869,10 @@ GET /cars/transactions/_search
   + 因为每个文档相互都是独立的，大规模数据可以在多个节点上进行分布。
 + 模拟关系数据库：
 
+### 分页
+
+https://www.lidihuo.com/elasticsearch/elasticsearch-pagination.html
+
 
 
 ## 12.19
@@ -935,4 +939,60 @@ final Car police = Car.create( Car::new );cars.forEach( police::follow );
     .min(Long::compare)
     .orElseGet(System::currentTimeMillis);
 ```
+
+
+
+## 1.3
+
+#### Git rebase
+
+[git实用技巧：将多次commit合并为一次](https://blog.csdn.net/vxzhg/article/details/105448190)
+
+注意：使用git rebase之前必须先git stash保存当前的工作进度（包括暂存区和工作区）
+
+#### Git chekout 丢弃修改
+
+具体：当前工作区的所有修改，尚未暂存，丢弃
+
+`git checkout .     //清除当前目录下所有没add的修改`
+
+https://segmentfault.com/q/1010000005850900
+
+
+
+## 1.4
+
+#### 所有的“class not found”问题 -> 编译问题
+
+
+
+#### Java继承 底层实现
+
+https://www.cnblogs.com/swiftma/p/5537665.html
+
+***实质：类加载***
+
+参考：《深入理解JVM》第七章：类加载机制：
+
+“Java类型的加载、链接、初始化都是在程序运行期间完成的，使得Java语言提前编译困难，但是提高了扩展性”——多态{实现接口方法、继承抽象类重写抽象方法、继承重写覆盖父类方法} 就体现在这里。
+
+<img src="https://raw.githubusercontent.com/tuysss/cloudimg/main/Typora-Notes-images/2023/01/04/8a4efb09a3469128d62bfb439fcdcde9-20230104142759-84d476.png" alt="image-20230104142757629" style="zoom:50%;" />
+
+（pps，类加载器在虚拟机外部，作用是图中第一步“加载”中的其中第一个动作——通过一个类的全限定名来获取描述该类的二进制字节 
+
+流”）
+
+
+
+#### 并发场景下的幂等问题 & 分布式锁
+
+https://www.sohu.com/a/505277466_612370
+
+“锁就是共享资源的互斥访问”
+
+
+
+
+
+
 
