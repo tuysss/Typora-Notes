@@ -261,7 +261,8 @@
 + 有一个问题，上传图片报错，报错日志看不懂
 
   + 解决：去github-setting重新生成了token，替换到picgo配置中
-
+  + 2023/1/10又遇到这个问题，确实是token过期释放的问题。这次设置了90天过期时间。需要本周期内github token的话，去picgo配置文件里复制。
+  
   
 
 **阅读 性能优化七步法 + 美团技术团队 大众点评订单分库分表实战**
@@ -994,5 +995,57 @@ https://www.sohu.com/a/505277466_612370
 
 
 
+## 1.9
 
+#### about中台
+
+![image-20230109150954179](../../../Library/Application%20Support/typora-user-images/image-20230109150954179.png)
+
+#### goland破解✅
+
+https://www.bilibili.com/read/cv11179149
+
+#### Git 待处理🅿️
+
+https://blog.csdn.net/HeatDeath/article/details/79181025
+
+still：搞清楚两个配置
+
+#### Go学到：
+
+https://go.dev/tour/flowcontrol/1
+
+
+
+## 1.11
+
+#### debug `NoSuchBeanDefinitionException`
+
+`Neither @ContextConfiguration nor @ContextHierarchy found for test class`
+
+栈底错误：
+
+```bash
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.kuaishou.kwaishop.scm.address.rich.client.AddressMetaRichReadClient' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+```
+
+test运行不起来。
+
+解决：本服务中的Application类中添加包扫描。
+
+<img src="https://raw.githubusercontent.com/tuysss/cloudimg/main/Typora-Notes-images/2023/01/11/f4cd44036d2f6bece605616a5bedeb59-20230111155113-e8386d.png" alt="image-20230111155111803" style="zoom:50%;" />
+
+![image-20230111155143367](https://raw.githubusercontent.com/tuysss/cloudimg/main/Typora-Notes-images/2023/01/11/c4dad9ad9b2b1a9ee9c271e2b9890ceb-20230111155144-47e94b.png)
+
+**总结`NoSuchBeanDefinitionException`解决思路：**
+
+1. 检查：要注入bean容器的类（之后将被@autowired的）是否添加了@Component注解
+2. 检查：@Service注解要加在实现类上，是否错误地添加到了接口上
+3. 最后，检查是否添加了包扫描路径
+
+
+
+#### 缓存预热
+
+https://zq99299.github.io/note-book/cache-pdp/069.html#%E7%BC%93%E5%AD%98%E9%A2%84%E7%83%AD%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF
 
