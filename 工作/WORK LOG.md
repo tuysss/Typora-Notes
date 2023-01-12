@@ -1091,3 +1091,9 @@ https://mp.weixin.qq.com/s/wfabzdpOPdq89faFFpZ4NA
 
 
 
+## 1.12
+
+#### debug 调试接口 502gateway错误
+
+参考：https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/download%2Fpdf%2F149549%2F%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5_cn_zh-CN.pdf
+
