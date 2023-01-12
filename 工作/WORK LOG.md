@@ -1095,5 +1095,7 @@ https://mp.weixin.qq.com/s/wfabzdpOPdq89faFFpZ4NA
 
 #### debug 调试接口 502gateway错误
 
+原因：没有在request header中配置测试用泳道，因为主干中还没有这个grpc服务。
+
 参考：https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/download%2Fpdf%2F149549%2F%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5_cn_zh-CN.pdf
 
