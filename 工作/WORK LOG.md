@@ -1049,3 +1049,45 @@ test运行不起来。
 
 https://zq99299.github.io/note-book/cache-pdp/069.html#%E7%BC%93%E5%AD%98%E9%A2%84%E7%83%AD%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF
 
+
+
+#### debug： git提交远程仓库被拒绝
+
+最近遇到两次。
+
+报错信息：
+
+```bash
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+```
+
+解决：
+
+1.是否能连接到远程仓库
+
+```bash
+ssh -T git@git.corp.kuaishou.com
+```
+
+或者
+
+```bash
+ssh -vT git@github.com
+```
+
+2. 分情况
+   1. 连接不上（即本次github场景）：因为之前重新生成了ssh key，可能被本机判断为全局的，覆盖了之前rsa_github.pub，把这个key填到github设置中即可
+   2. 能连接上（场景：clone、pull都可以，提交业务代码至gitlab仓库中失败）：developer权限到期。
+
+
+
+#### 写一下实习项目部分的简历：
+
+https://mp.weixin.qq.com/s/wfabzdpOPdq89faFFpZ4NA
+
+
+
