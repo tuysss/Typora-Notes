@@ -1099,3 +1099,20 @@ https://mp.weixin.qq.com/s/wfabzdpOPdq89faFFpZ4NA
 
 参考：https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/download%2Fpdf%2F149549%2F%25E6%259C%2580%25E4%25BD%25B3%25E5%25AE%259E%25E8%25B7%25B5_cn_zh-CN.pdf
 
+
+
+#### git冲突：从远程fecth后，要和本地代码merge，出现merge conflict问题
+
+分情况，
+
+1. 确定远程分支是需要的，那么丢弃本地分支内容
+
+   `git reset --hard origin/master`
+
+2. 不能丢弃本地修改，那么需要对unmerged的文件进行手动修改，删掉其中冲突的部分，然后运行如下命令
+
+   `$:git add filename
+   $:git commit -m "message"`
+
+参考：https://blog.csdn.net/nonfuxinyang/article/details/77206486
+
